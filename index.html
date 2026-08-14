@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapture Network - Minecraft Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e14 0%, #161920 50%, #0f1419 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(180deg, rgba(22, 25, 32, 0.95) 0%, rgba(15, 20, 25, 0.9) 100%);
+            border-bottom: 2px solid rgba(0, 240, 255, 0.3);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 1px 0 rgba(0, 240, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8)) 
+                    drop-shadow(0 0 40px rgba(0, 240, 255, 0.4));
+            animation: logoGlow 3s ease-in-out infinite;
+            object-fit: contain;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.8)) 
+                        drop-shadow(0 0 40px rgba(0, 240, 255, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(0, 240, 255, 1)) 
+                        drop-shadow(0 0 60px rgba(0, 240, 255, 0.6));
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00f0ff 0%, #00b8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 10px rgba(0, 240, 255, 0.5);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #00f0ff;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* IP Copy Box */
+        .ip-box {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 184, 212, 0.05) 100%);
+            border: 2px solid #00f0ff;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            max-width: 400px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0, 240, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ip-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .ip-box:hover::before {
+            left: 100%;
+        }
+
+        .ip-box:hover {
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.6), inset 0 0 30px rgba(0, 240, 255, 0.1);
+            transform: scale(1.05);
+            border-color: #00ffff;
+        }
+
+        .ip-label {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .ip-address {
+            font-size: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: #00f0ff;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+        }
+
+        .copy-hint {
+            font-size: 0.8rem;
+            color: rgba(0, 240, 255, 0.6);
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #00f0ff 0%, #00b8d4 100%);
+            color: #0a0e14;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+            pointer-events: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00f0ff 0%, #00b8d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #161920 0%, #1a1f27 100%);
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 240, 255, 0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+            animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: #00f0ff;
+            box-shadow: 0 16px 48px rgba(0, 240, 255, 0.25), 
+                        inset 0 0 30px rgba(0, 240, 255, 0.05);
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, rgba(0, 184, 212, 0.03) 100%),
+                        linear-gradient(135deg, #161920 0%, #1a1f27 100%);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.6));
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: #00f0ff;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .feature-description {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 184, 212, 0.05) 100%);
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 0 30px rgba(0, 240, 255, 0.03);
+            margin-bottom: 4rem;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            color: #00f0ff;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #00b8d4 100%);
+            color: #0a0e14;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5), 
+                        inset 0 -2px 10px rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.8), 
+                        inset 0 -2px 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(22, 25, 32, 0.8);
+            border-top: 2px solid rgba(0, 240, 255, 0.3);
+            padding: 2rem 1rem;
+            text-align: center;
+            color: rgba(224, 224, 224, 0.6);
+            font-size: 0.9rem;
+            box-shadow: inset 0 1px 0 rgba(0, 240, 255, 0.1);
+        }
+
+        .footer-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-accent {
+            color: #00f0ff;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.2rem;
+            }
+
+            .cta-section {
+                padding: 2rem;
+            }
+
+            .cta-title {
+                font-size: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 1rem;
+            }
+
+            .ip-address {
+                font-size: 1.2rem;
+            }
+
+            .copy-notification {
+                right: 10px;
+                left: 10px;
+                width: calc(100% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1.5rem 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 1.5rem 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .features-grid {
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1rem;
+            }
+
+            .ip-box {
+                padding: 1rem 1.5rem;
+            }
+
+            .ip-address {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <img src="logo.png" alt="Rapture Network Logo" class="logo">
+            <h1>RAPTURE NETWORK</h1>
+            <p class="tagline">Premium Minecraft Server Network</p>
+            
+            <!-- IP Copy Box -->
+            <div class="ip-box" onclick="copyToClipboard()">
+                <div class="ip-label">Server IP</div>
+                <div class="ip-address">play.rapturenetwork.com</div>
+                <div class="copy-hint">Click to copy</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Features Section -->
+        <h2 class="section-title">🎮 Game Modes</h2>
+        <div class="features-grid">
+            <!-- Custom Survival -->
+            <div class="feature-card">
+                <div class="feature-icon">🌲</div>
+                <h3 class="feature-title">Custom Survival</h3>
+                <p class="feature-description">
+                    Experience vanilla Minecraft with custom mechanics, exclusive biomes, and unique progression systems. Build, explore, and survive with your friends in an endless adventure.
+                </p>
+            </div>
+
+            <!-- Practice -->
+            <div class="feature-card">
+                <div class="feature-icon">⚔️</div>
+                <h3 class="feature-title">Practice</h3>
+                <p class="feature-description">
+                    Sharpen your PvP skills in our dedicated practice arena. Access advanced equipment, test new strategies, and dominate the competition with unlimited resources.
+                </p>
+            </div>
+
+            <!-- Skyblock -->
+            <div class="feature-card">
+                <div class="feature-icon">☁️</div>
+                <h3 class="feature-title">Skyblock</h3>
+                <p class="feature-description">
+                    Rise from a single island in the sky. Expand your territory, complete challenges, and compete on the leaderboards. Build your dream sky empire today.
+                </p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 class="cta-title">Join Our Community</h2>
+            <p style="margin-bottom: 1.5rem; color: #b0b0b0; font-size: 1.05rem;">
+                Connect with thousands of players, get support, and stay updated with the latest news and events.
+            </p>
+            <a href="https://discord.com" target="_blank" class="cta-button">Join Discord</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-text">
+            © 2024 <span class="footer-accent">Rapture Network</span> — Premium Minecraft Network
+        </div>
+        <div class="footer-text">
+            Server Status: <span class="footer-accent">● Online</span>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Copy to Clipboard -->
+    <script>
+        function copyToClipboard() {
+            const ipAddress = 'play.rapturenetwork.com';
+            
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = ipAddress;
+            document.body.appendChild(textarea);
+            
+            // Select and copy
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Remove temporary element
+            document.body.removeChild(textarea);
+            
+            // Show notification
+            showCopyNotification();
+        }
+
+        function showCopyNotification() {
+            // Remove existing notification if present
+            const existing = document.querySelector('.copy-notification');
+            if (existing) {
+                existing.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'copy-notification';
+            notification.textContent = '✓ Copied to clipboard!';
+            document.body.appendChild(notification);
+
+            // Remove after animation
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Keyboard shortcut: Press 'C' to copy IP
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.metaKey) {
+                // Only if not typing in an input
+                if (document.activeElement.tagName !== 'INPUT' && 
+                    document.activeElement.tagName !== 'TEXTAREA') {
+                    copyToClipboard();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
