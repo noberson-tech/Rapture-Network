@@ -141,6 +141,70 @@
             font-style: italic;
         }
 
+        /* Featured Banner */
+        .featured-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(0, 184, 212, 0.08) 100%);
+            border: 2px solid rgba(0, 240, 255, 0.4);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .featured-content {
+            text-align: left;
+        }
+
+        .featured-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #00f0ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-title {
+            font-size: 1.3rem;
+            color: #00f0ff;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .featured-desc {
+            font-size: 0.85rem;
+            color: #b0b0b0;
+        }
+
+        .featured-button {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #00f0ff 0%, #00b8d4 100%);
+            color: #0a0e14;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .featured-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+        }
+
         .copy-notification {
             position: fixed;
             top: 20px;
@@ -405,6 +469,17 @@
                 left: 10px;
                 width: calc(100% - 20px);
             }
+
+            .featured-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                max-width: 100%;
+            }
+
+            .featured-button {
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 480px) {
@@ -439,6 +514,20 @@
             .ip-address {
                 font-size: 1rem;
             }
+
+            .featured-banner {
+                padding: 1rem;
+                max-width: 100%;
+            }
+
+            .featured-title {
+                font-size: 1.1rem;
+            }
+
+            .featured-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -455,6 +544,16 @@
                 <div class="ip-label">Server IP</div>
                 <div class="ip-address">spire-java.playit.plus</div>
                 <div class="copy-hint">Click to copy</div>
+            </div>
+
+            <!-- Apple MC Featured Server -->
+            <div class="featured-banner">
+                <div class="featured-content">
+                    <span class="featured-label">🍎 Featured Server</span>
+                    <h3 class="featured-title">Apple MC</h3>
+                    <p class="featured-desc">378 Players Online • applemc.fun</p>
+                </div>
+                <a href="https://discord.gg/Es235ytxV" class="featured-button">Join Now</a>
             </div>
         </div>
     </header>
@@ -488,15 +587,6 @@
                 <h3 class="feature-title">Skyblock</h3>
                 <p class="feature-description">
                     Rise from a single island in the sky. Expand your territory, complete challenges, and compete on the leaderboards. Build your dream sky empire today.
-                </p>
-            </div>
-
-            <!-- Apple MC -->
-            <div class="feature-card">
-                <div class="feature-icon">🍎</div>
-                <h3 class="feature-title">Apple MC</h3>
-                <p class="feature-description">
-                    Join thousands of players in the ultimate Minecraft experience. Enjoy cross-platform gameplay, exclusive events, and a thriving community on our flagship server.
                 </p>
             </div>
         </div>
