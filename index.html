@@ -3,81 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prismatic SMP | Official Minecraft Server</title>
+    <title>Prismatic SMP | Transcend Vanilla</title>
     <style>
-        /* Reset & Variables */
+        /* Cyber-Prismatic Framework Setup */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             scroll-behavior: smooth;
         }
 
         :root {
-            --bg-color: #0b061a; /* Dark obsidian purple */
-            --card-bg: rgba(147, 51, 234, 0.04);
-            --border-color: rgba(168, 85, 247, 0.2);
-            --text-main: #f3f4f6;
-            --text-muted: #c084fc; /* Soft lavender */
-            --accent: #a855f7; /* Prismatic neon purple */
-            --accent-glow: rgba(168, 85, 247, 0.4);
-            --success: #22c55e;
+            --bg: #05020c;
+            --surface: rgba(15, 8, 28, 0.6);
+            --border: rgba(168, 85, 247, 0.2);
+            --border-glow: rgba(168, 85, 247, 0.4);
+            
+            /* Prismatic Neon Gradient Variables */
+            --p-purple: #a855f7;
+            --p-blue: #3b82f6;
+            --p-pink: #ec4899;
+            
+            --text: #f3f4f6;
+            --text-muted: #a78bfa;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
             line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 15% 70%, rgba(236, 72, 153, 0.06) 0%, transparent 35%);
         }
 
-        /* Glassmorphic Navigation Bar */
+        /* Animated Grid Overlay Mesh */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(168, 85, 247, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Ultra-Clean Floating Navbar */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.25rem 10%;
-            background: rgba(11, 6, 26, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2.5rem;
+            background: rgba(5, 2, 12, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
             z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.4s;
+        }
+
+        nav:hover {
+            border-color: rgba(168, 85, 247, 0.4);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            background: linear-gradient(45deg, #fff, #d8b4fe, var(--accent));
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fff 30%, var(--p-purple), var(--p-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '⬢';
+            font-size: 1.1rem;
+            color: var(--p-purple);
+            text-shadow: 0 0 10px var(--p-purple);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            color: #9ca3af;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--text-main);
-            text-shadow: 0 0 10px var(--accent-glow);
+            color: var(--text);
+            text-shadow: 0 0 15px var(--p-purple);
         }
 
-        /* Hero Section */
+        /* Hero Kinetic Layout */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -85,240 +127,186 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             position: relative;
         }
 
-        /* Ambient Prismatic Glow Circles */
-        .hero::before {
-            content: '';
+        /* Prismatic Dynamic Moving Plasma Aura */
+        .hero-glow-core {
             position: absolute;
-            top: 45%;
-            left: 50%;
+            top: 45%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--accent) 0%, #6366f1 100%);
-            filter: blur(150px);
-            opacity: 0.18;
-            z-index: -1;
+            width: 500px; height: 500px;
+            background: linear-gradient(45deg, var(--p-purple), var(--p-blue), var(--p-pink));
+            filter: blur(160px);
+            opacity: 0.22;
+            z-index: -2;
+            border-radius: 50%;
+            animation: pulseAura 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseAura {
+            0% { transform: translate(-50%, -50%) scale(1); rotate: 0deg; }
+            100% { transform: translate(-50%, -50%) scale(1.2); rotate: 180deg; }
+        }
+
+        /* Decorative Badge */
+        .badge {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--text-muted);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 12px rgba(168, 85, 247, 0.1);
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.8rem;
             font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            max-width: 800px;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #e9d5ff, #c084fc);
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #ffffff 40%, #e9d5ff 75%, rgba(168, 85, 247, 0.7));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            color: var(--text-muted);
+            color: #9ca3af;
             font-size: 1.25rem;
-            max-width: 600px;
-            margin-bottom: 2.5rem;
+            max-width: 620px;
+            margin-bottom: 3rem;
+            font-weight: 400;
         }
 
-        /* Interactive IP Copy Box Layout */
-        .ip-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
-            border-radius: 50px;
+        /* Kinetic IP Trigger Button */
+        .ip-module {
+            background: linear-gradient(90deg, rgba(255,255,255,0.01), rgba(168, 85, 247, 0.05));
+            border: 1px solid var(--border);
+            padding: 0.6rem 0.6rem 0.6rem 2rem;
+            border-radius: 100px;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 2rem;
             cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        .ip-container:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-            box-shadow: 0 6px 24px var(--accent-glow);
+        .ip-module:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.25);
         }
 
-        .ip-text {
+        .ip-address-string {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-
-        .ip-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .ip-container:hover .ip-btn {
-            background: #b55fe6;
-        }
-
-        /* Toast Popup Notification */
-        .toast {
-            position: fixed;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--success);
-            color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2000;
-        }
-
-        .toast.show {
-            bottom: 30px;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 8rem 10%;
-            background: linear-gradient(180deg, rgba(11,6,26,0) 0%, rgba(20,10,40,0.4) 100%);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 4rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            background: linear-gradient(to right, #fff, #d8b4fe);
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #fff, #d8b4fe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .grid {
+        .ip-action-btn {
+            background: linear-gradient(135deg, var(--p-purple), #7c3aed);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            transition: all 0.3s;
+        }
+
+        .ip-module:hover .ip-action-btn {
+            filter: brightness(1.15);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.6);
+        }
+
+        /* Neon Feature Matrix Layout */
+        .features-grid-wrapper {
+            padding: 10rem 10% 8rem 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header-box {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .grid-matrix {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        /* Glassmorphic Cyber-Cards */
+        .matrix-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(168, 85, 247, 0.5);
-            box-shadow: 0 12px 30px rgba(168, 85, 247, 0.15);
+        /* Top linear gradient edge stripe on card hover */
+        .matrix-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--p-purple), var(--p-blue), var(--p-pink));
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            filter: drop-shadow(0 0 10px var(--accent));
+        .matrix-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 20px 40px rgba(10, 3, 28, 0.7), 0 0 30px rgba(168, 85, 247, 0.05);
         }
 
-        .card h3 {
-            margin-bottom: 0.8rem;
-            font-size: 1.4rem;
-            font-weight: 700;
+        .matrix-card:hover::before {
+            opacity: 1;
         }
 
-        .card p {
-            color: #d8b4fe;
-            font-size: 0.95rem;
-            opacity: 0.85;
+        .matrix-icon-circle {
+            width: 65px; height: 65px;
+            background: rgba(168, 85, 247, 0.06);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
         }
 
-        /* Footer */
-        footer {
-            padding: 4rem 10%;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer p a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Responsive Fixes */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .nav-links { display: none; }
-            .features { padding: 6rem 5%; }
-            .ip-container { padding: 0.5rem 0.5rem 0.5rem 1rem; gap: 0.8rem; }
-            .ip-text { font-size: 0.95rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Top Navigation Header -->
-    <nav>
-        <div class="logo">Prismatic SMP</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="https://discord.gg" target="_blank">Discord</a></li>
-        </ul>
-    </nav>
-
-    <!-- Main Hero Block Area -->
-    <section class="hero" id="home">
-        <h1>Welcome to Prismatic SMP</h1>
-        <p>A vibrant survival universe built for community, clean mechanics, and flawless vanilla-plus integration.</p>
-        
-        <!-- Interactive IP Clipboard Module -->
-        <div class="ip-container" id="ipCard" onclick="copyIpAddress()">
-            <span class="ip-text" id="ipText">play.prismaticsmp.net</span>
-            <button class="ip-btn">Copy IP</button>
-        </div>
-    </section>
-
-    <!-- Core Server Features Layout -->
-    <section class="features" id="features">
-        <h2 class="section-title">Explore The Realm</h2>
-        <div class="grid">
-            <div class="card">
-                <span class="card-icon">💎</span>
-                <h3>Balanced Economy</h3>
-                <p>Player-driven trade setups, dedicated market structures, and clean currency integration frameworks.</p>
-            </div>
-            <div class="card">
-                <span class="card-icon">👑</span>
-                <h3>Grief Prevention</h3>
-                <p>Protect your custom expansions instantly with intuitive, seamless mechanical land claiming options.</p>
-            </div>
-            <div class="card">
-                <span class="card-icon">🔮</span>
-                <h3>Custom Cosmetics</h3>
-                <p>Unlock visual glowing components, custom chat tags, and unique cosmetics as you progress.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Success Copy Notification Toast -->
-    <div class="toast" id="toastBox">Server IP Copied to Clipboard!</div>
-
-    <!-- Copyright Content -->
-    <footer>
-        <p>&copy; 2026 Prismatic SMP. Not affiliated with Mojang Studios.</p>
-    </footer>
-
+        .matrix-card:hover .matrix-icon-circle {
